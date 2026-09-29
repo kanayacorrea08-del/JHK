@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>¿Por dónde viajan? - Grado Jardín</title>
+<style>
+  :root{--blue:#168fc7;--sky:#e9f7fd;--land:#9a4b12;--water:#0b78c7;--air:#21a5e8;--ok:#2e9b5b;--bad:#c44b4b}
+  *{box-sizing:border-box} body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#f4fbff;color:#222}
+  .sheet{max-width:1180px;margin:18px auto;background:#fff;border:4px solid var(--blue);border-radius:24px;padding:18px 22px;box-shadow:0 8px 26px #0001}
+  h1{margin:0;text-align:center;color:#124e9a;font-size:38px}.sub{text-align:center;font-weight:700;font-size:22px;margin:4px 0 14px}
+  .meta{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-bottom:12px}.pill{background:#eef8fd;border:1px solid #b9e4f5;border-radius:16px;padding:8px 14px;font-size:16px}
+  .scene-wrap{text-align:center}.scene{max-width:100%;height:auto;border-radius:16px;border:2px solid #b8dff0}
+  .instr{background:#fff8dc;border:2px dashed #f0a000;border-radius:18px;padding:12px 16px;margin:14px 0;font-size:18px;text-align:center}
+  .cards{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:12px 0 16px}.card{cursor:grab;user-select:none;background:#fff;border:2px solid #a8d7eb;border-radius:14px;padding:8px 14px;font-weight:700;box-shadow:0 2px 6px #0001;min-width:135px;text-align:center;font-size:17px}.card .ico{font-size:31px;display:block;margin-bottom:4px}
+  .zones{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.zone{min-height:150px;border:3px dashed #bbb;border-radius:18px;padding:10px;background:#fafafa}.zone h3{text-align:center;margin:0 0 8px;font-size:22px}.zone[data-type="tierra"]{border-color:#b56b2c;background:#fff7ef}.zone[data-type="agua"]{border-color:#1687ce;background:#eff8ff}.zone[data-type="aire"]{border-color:#43b7ef;background:#f1fbff}.zone .card{margin:6px auto;cursor:grab}
+  .actions{text-align:center;margin:14px 0 6px}.actions button{border:0;border-radius:12px;padding:11px 18px;margin:0 5px;font-size:17px;font-weight:700;cursor:pointer}.check{background:var(--blue);color:#fff}.reset{background:#eee}.msg{text-align:center;font-size:18px;font-weight:700;min-height:24px;margin-top:8px}
+  footer{text-align:center;font-size:13px;color:#666;border-top:1px solid #ddd;margin-top:14px;padding-top:8px}
+  @media(max-width:760px){.zones{grid-template-columns:1fr}h1{font-size:29px}.sub{font-size:18px}.sheet{margin:0;border-radius:0;border-width:0}}
+</style>
+</head>
+<body>
+<div class="sheet">
+  <h1>¿Por dónde viajan?</h1>
+  <div class="sub">Clasificamos los medios de transporte</div>
+  <div class="meta"><div class="pill"><b>Grado:</b> Jardín</div><div class="pill"><b>Objetivo:</b> reconocer y clasificar medios de transporte por tierra, agua y aire.</div></div>
+  <div class="scene-wrap"><div style="padding:14px;border-radius:16px;border:2px solid #b8dff0;background:linear-gradient(#bfeaff 0 58%,#e6f7c9 58% 76%,#74c7ed 76%);min-height:250px;display:grid;grid-template-columns:repeat(3,1fr);align-items:center;gap:10px;font-size:76px"><div>🚗 🚌 🚲</div><div>⛴️</div><div>✈️ 🚁</div></div></div>
+  <div class="instr"><b>Observa la imagen.</b> Luego arrastra cada medio de transporte al lugar por donde viaja y pulsa <b>Comprobar</b>.</div>
+  <div class="cards" id="cards">
+    <div class="card" draggable="true" data-answer="tierra"><span class="ico">🚗</span>Carro</div>
+    <div class="card" draggable="true" data-answer="tierra"><span class="ico">🚌</span>Bus</div>
+    <div class="card" draggable="true" data-answer="tierra"><span class="ico">🚲</span>Bicicleta</div>
+    <div class="card" draggable="true" data-answer="agua"><span class="ico">⛴️</span>Barco</div>
+    <div class="card" draggable="true" data-answer="aire"><span class="ico">✈️</span>Avión</div>
+    <div class="card" draggable="true" data-answer="aire"><span class="ico">🚁</span>Helicóptero</div>
+  </div>
+  <div class="zones">
+    <div class="zone" data-type="tierra"><h3>🛣️ Por tierra</h3></div>
+    <div class="zone" data-type="agua"><h3>🌊 Por agua</h3></div>
+    <div class="zone" data-type="aire"><h3>☁️ Por aire</h3></div>
+  </div>
+  <div class="actions"><button class="check" onclick="checkAnswers()">Comprobar</button><button class="reset" onclick="resetActivity()">Reiniciar</button></div>
+  <div class="msg" id="msg"></div>
+  <footer>Elaboración: Jairiht Sofia Díaz Gaibao · Recurso educativo basado en una imagen creada con apoyo de IA generativa (OpenAI, 2026) y adaptada con finalidad didáctica.</footer>
+</div>
+<script>
+let dragged=null;
+document.querySelectorAll('.card').forEach(c=>{
+ c.addEventListener('dragstart',()=>{dragged=c;setTimeout(()=>c.style.opacity='.45',0)});
+ c.addEventListener('dragend',()=>{c.style.opacity='1';dragged=null});
+});
+document.querySelectorAll('.zone,#cards').forEach(z=>{
+ z.addEventListener('dragover',e=>e.preventDefault());
+ z.addEventListener('drop',e=>{e.preventDefault();if(dragged) z.appendChild(dragged)});
+});
+function checkAnswers(){
+ let cards=[...document.querySelectorAll('.card')], placed=0, ok=0;
+ cards.forEach(c=>{let p=c.parentElement; c.style.borderColor='#a8d7eb'; if(p.classList.contains('zone')){placed++; if(p.dataset.type===c.dataset.answer){ok++;c.style.borderColor='#2e9b5b'}else c.style.borderColor='#c44b4b'}});
+ let m=document.getElementById('msg');
+ if(placed<6){m.textContent='Aún faltan transportes por clasificar.';m.style.color='#a66a00'}
+ else if(ok===6){m.textContent='¡Muy bien! Clasificaste correctamente los seis medios de transporte.';m.style.color='#2e9b5b'}
+ else{m.textContent='Revisa los transportes marcados en rojo e inténtalo otra vez.';m.style.color='#c44b4b'}
+}
+function resetActivity(){let area=document.getElementById('cards');document.querySelectorAll('.card').forEach(c=>{c.style.borderColor='#a8d7eb';area.appendChild(c)});document.getElementById('msg').textContent=''}
+</script>
+</body></html>
