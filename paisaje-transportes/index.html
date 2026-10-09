@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>La gran aventura de los transportes</title>
+<style>
+:root{--ink:#17324d;--blue:#5dc6f2;--green:#73c96b;--sand:#f4d58d;--card:#fffdf7;--accent:#ff9f43}
+*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,Segoe UI,sans-serif;background:#eef7fb;color:var(--ink)}
+header{padding:18px 20px;text-align:center;background:white;box-shadow:0 2px 12px #0001}h1{margin:0;font-size:clamp(24px,4vw,42px)}header p{margin:.35rem 0 0}
+.scene{position:relative;max-width:1200px;height:min(72vh,720px);min-height:520px;margin:20px auto;border-radius:28px;overflow:hidden;box-shadow:0 14px 35px #17324d25;border:6px solid #fff;background:#9bdcf7}
+.scene svg{width:100%;height:100%;display:block}.station{position:absolute;width:70px;height:70px;border-radius:50%;border:5px solid white;background:#ff9f43;color:white;font-weight:800;font-size:25px;display:grid;place-items:center;cursor:pointer;box-shadow:0 8px 18px #0003;transition:.2s}.station:hover,.station:focus{transform:scale(1.1);outline:4px solid #17324d33}.s1{left:12%;top:57%}.s2{left:38%;top:67%}.s3{left:71%;top:68%}.s4{left:82%;top:24%}.s5{left:54%;top:20%}.s6{left:25%;top:20%}
+.legend{max-width:1200px;margin:0 auto 25px;display:flex;gap:10px;flex-wrap:wrap;justify-content:center}.pill{background:#fff;border-radius:999px;padding:8px 13px;box-shadow:0 3px 10px #0001;font-size:14px}
+.modal{position:fixed;inset:0;background:#17324ddd;display:none;align-items:center;justify-content:center;padding:18px;z-index:10}.modal.open{display:flex}.panel{background:var(--card);width:min(760px,96vw);max-height:90vh;overflow:auto;border-radius:22px;padding:24px;position:relative}.close{position:absolute;right:14px;top:12px;border:0;background:#eee;border-radius:50%;width:38px;height:38px;font-size:22px;cursor:pointer}.panel h2{margin-top:0}.choices{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px}.choice,.btn{border:0;border-radius:14px;padding:12px;background:#e7f5fb;cursor:pointer;font-weight:700}.choice:hover,.btn:hover{filter:brightness(.97)}.feedback{margin-top:12px;font-weight:700;min-height:24px}.dropgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.zone{min-height:100px;padding:10px;border:3px dashed #7aa9bd;border-radius:14px;background:#fff}.tokens{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}.token{background:#fff2cf;border:2px solid #e0b14c;border-radius:12px;padding:8px 10px;cursor:grab}.big{font-size:34px}.scenario{padding:12px;background:white;border-radius:14px;margin:10px 0}.route{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}.selected{background:#d7f6dc!important}.small{font-size:13px;color:#526b7d}
+@media(max-width:700px){.scene{height:560px;margin:10px}.station{width:58px;height:58px}.dropgrid{grid-template-columns:1fr}.s4{left:79%}}
+</style>
+</head>
+<body>
+<header><h1>🚦 La gran aventura de los transportes</h1><p>Explora las seis estaciones. Puedes realizarlas en el orden que prefieras.</p></header>
+<div class="scene" aria-label="Paisaje interactivo con estaciones de aprendizaje">
+<svg viewBox="0 0 1200 700" role="img" aria-label="Paisaje con cielo, montañas, carretera y lago">
+<defs><linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#78cef5"/><stop offset="1" stop-color="#dff5ff"/></linearGradient></defs>
+<rect width="1200" height="700" fill="url(#sky)"/><circle cx="1020" cy="95" r="55" fill="#ffd75e"/>
+<g fill="#fff" opacity=".85"><ellipse cx="170" cy="110" rx="72" ry="28"/><ellipse cx="220" cy="110" rx="54" ry="24"/><ellipse cx="690" cy="95" rx="70" ry="25"/></g>
+<path d="M0 360 Q170 190 340 360 Q510 180 690 360 Q860 210 1040 360 L1200 360 L1200 700 L0 700Z" fill="#79b96a"/>
+<path d="M0 450 Q240 390 470 455 T920 445 T1200 450 L1200 700 L0 700Z" fill="#69c76c"/>
+<path d="M0 560 C220 500 390 515 610 560 C820 610 1010 605 1200 545 L1200 700 L0 700Z" fill="#4e5863"/>
+<path d="M0 595 C220 535 390 550 610 595 C820 645 1010 640 1200 580" fill="none" stroke="#f7e46b" stroke-width="14" stroke-dasharray="42 38"/>
+<path d="M850 420 Q1020 360 1200 405 L1200 700 L930 700 Q860 610 850 420Z" fill="#55bde5"/>
+<g font-size="70"><text x="90" y="510">🚗</text><text x="300" y="520">🚌</text><text x="525" y="510">🚲</text><text x="970" y="520">⛵</text><text x="520" y="150">✈️</text><text x="850" y="190">🚁</text></g>
+<g fill="#3c8d4b"><circle cx="100" cy="410" r="38"/><rect x="92" y="410" width="16" height="72" fill="#805a3b"/><circle cx="760" cy="390" r="42"/><rect x="751" y="390" width="18" height="85" fill="#805a3b"/></g>
+</svg>
+<button class="station s1" onclick="openStation(1)" aria-label="Estación 1">1</button><button class="station s2" onclick="openStation(2)">2</button><button class="station s3" onclick="openStation(3)">3</button><button class="station s4" onclick="openStation(4)">4</button><button class="station s5" onclick="openStation(5)">5</button><button class="station s6" onclick="openStation(6)">6</button>
+</div>
+<div class="legend"><span class="pill">1 👂 Escucha y reconoce</span><span class="pill">2 🧩 Clasifica</span><span class="pill">3 🔢 Cuenta</span><span class="pill">4 🔎 Detecta el intruso</span><span class="pill">5 💭 Elige y explica</span><span class="pill">6 ✨ Crea tu ruta</span></div>
+<div id="modal" class="modal" onclick="if(event.target===this)closeModal()"><div class="panel"><button class="close" onclick="closeModal()">×</button><div id="content"></div></div></div>
+<script>
+const names={carro:'🚗 Carro',bus:'🚌 Bus',bicicleta:'🚲 Bicicleta',barco:'⛵ Barco',avion:'✈️ Avión',helicoptero:'🚁 Helicóptero'};
+function speak(t){if('speechSynthesis'in window){speechSynthesis.cancel();speechSynthesis.speak(new SpeechSynthesisUtterance(t))}}
+function openStation(n){document.getElementById('modal').classList.add('open'); const c=document.getElementById('content');
+if(n===1)c.innerHTML=`<h2>1. Escucha y reconoce</h2><p>Haz clic en cada transporte, escucha su nombre y repítelo.</p><div class="choices">${Object.entries(names).map(([k,v])=>`<button class="choice big" onclick="speak('${k}')">${v}</button>`).join('')}</div><p class="small">Reto: nombra uno que viaje por tierra, uno por agua y uno por aire.</p>`;
+if(n===2)c.innerHTML=`<h2>2. Clasifica: tierra, agua o aire</h2><p>Arrastra cada transporte a su lugar.</p><div class="tokens">${Object.entries(names).map(([k,v])=>`<span class="token" draggable="true" data-key="${k}" ondragstart="drag(event)">${v}</span>`).join('')}</div><div class="dropgrid"><div class="zone" data-zone="tierra" ondragover="event.preventDefault()" ondrop="drop(event)"><b>🌳 Tierra</b></div><div class="zone" data-zone="agua" ondragover="event.preventDefault()" ondrop="drop(event)"><b>🌊 Agua</b></div><div class="zone" data-zone="aire" ondragover="event.preventDefault()" ondrop="drop(event)"><b>☁️ Aire</b></div></div><button class="btn" onclick="checkDrop()">Comprobar</button><div id="fb" class="feedback"></div>`;
+if(n===3)c.innerHTML=`<h2>3. Cuenta los transportes</h2><div class="scenario big">🚗 🚗 🚗 🚌 🚌 🚲</div><p>¿Cuántos transportes hay en total?</p><div class="choices">${[4,5,6,7].map(x=>`<button class="choice" onclick="feedback(${x===6},'¡Son 6 transportes!')">${x}</button>`).join('')}</div><div id="fb" class="feedback"></div>`;
+if(n===4)c.innerHTML=`<h2>4. Detecta el intruso</h2><p>Todos deberían viajar por <b>agua</b>. ¿Cuál está en el grupo equivocado?</p><div class="choices"><button class="choice big" onclick="feedback(false,'Mira otra vez.')">⛵</button><button class="choice big" onclick="feedback(false,'Mira otra vez.')">🚤</button><button class="choice big" onclick="feedback(true,'¡Correcto! El carro viaja por tierra.')">🚗</button></div><div id="fb" class="feedback"></div>`;
+if(n===5)c.innerHTML=`<h2>5. Elige y explica</h2><div class="scenario">Necesitas cruzar un lago con tu familia. ¿Qué transporte elegirías?</div><div class="choices"><button class="choice" onclick="feedback(false,'Piensa por dónde se desplaza.')">🚲 Bicicleta</button><button class="choice" onclick="feedback(true,'¡Buena elección! Ahora explica con tus palabras por qué.')">⛵ Barco</button><button class="choice" onclick="feedback(false,'Piensa por dónde se desplaza.')">🚌 Bus</button></div><div id="fb" class="feedback"></div>`;
+if(n===6)c.innerHTML=`<h2>6. Crea tu ruta</h2><p>Elige tres transportes para inventar un viaje. Después cuenta tu historia a un compañero.</p><div class="choices">${Object.entries(names).map(([k,v])=>`<button class="choice" onclick="toggleRoute(this,'${v}')">${v}</button>`).join('')}</div><div class="route" id="route"></div><button class="btn" onclick="speakRoute()">Escuchar mi ruta</button><p class="small">Puedes cambiar tu elección y crear una ruta diferente.</p>`;
+}
+function closeModal(){document.getElementById('modal').classList.remove('open')}
+function feedback(ok,msg){const f=document.getElementById('fb');f.textContent=(ok?'✅ ':'💡 ')+msg}
+function drag(e){e.dataTransfer.setData('text',e.target.dataset.key)}
+function drop(e){e.preventDefault();const k=e.dataTransfer.getData('text');const el=document.querySelector(`.token[data-key="${k}"]`);e.currentTarget.appendChild(el)}
+function checkDrop(){const truth={carro:'tierra',bus:'tierra',bicicleta:'tierra',barco:'agua',avion:'aire',helicoptero:'aire'};let ok=true;document.querySelectorAll('.zone').forEach(z=>z.querySelectorAll('.token').forEach(t=>{if(truth[t.dataset.key]!==z.dataset.zone)ok=false}));document.getElementById('fb').textContent=ok?'✅ ¡Muy bien! Revisaste por dónde viaja cada uno.':'💡 Revisa: algunos transportes todavía no están en su lugar.'}
+let route=[];function toggleRoute(btn,name){if(route.includes(name)){route=route.filter(x=>x!==name);btn.classList.remove('selected')}else if(route.length<3){route.push(name);btn.classList.add('selected')}document.getElementById('route').textContent=route.length?'Mi ruta: '+route.join(' → '):''}
+function speakRoute(){if(route.length<3){alert('Elige tres transportes.');return}speak('Mi viaje comienza en '+route[0]+', continúa en '+route[1]+' y termina en '+route[2]+'.')}
+</script>
+</body></html>
